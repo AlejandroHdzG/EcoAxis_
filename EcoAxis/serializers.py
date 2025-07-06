@@ -1,67 +1,59 @@
 from rest_framework import serializers
 from EcoAxis.models import *
 
-class UsuarioSerializer(serializers.ModelSerializer):
+# Clase base reutilizable
+class BaseSerializer(serializers.ModelSerializer):
     class Meta:
+        fields = '__all__'
+
+class UsuarioSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Usuario
-        fields = '__all__'
 
-class EmpresaSerializer(serializers.ModelSerializer):
-    class Meta:
+class EmpresaSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Empresa
-        fields = '__all__'
 
-class CatalogoSerializer(serializers.ModelSerializer):
-    class Meta:
+class CatalogoSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Catalogo
-        fields = '__all__'
 
-class SucursalSerializer(serializers.ModelSerializer):
-    class Meta:
+class SucursalSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Sucursal
-        fields = '__all__'
 
-class ProductosEmpresaSerializer(serializers.ModelSerializer):
-    class Meta:
-        model: ProductosEmpresas
-        fields = '__all__'
+class ProductosEmpresaSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = ProductosEmpresas
 
-class SucursalProductosEmpresasSerializer(serializers.ModelSerializer):
-    class Meta:
-        model: SucursalProductosEmpresas
-        fields = '__all__'
+class SucursalProductosEmpresasSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
+        model = SucursalProductosEmpresas
 
-class TipoTecnicoSerializer(serializers.ModelSerializer):
-    class Meta:
+class TipoTecnicoSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = TipoTecnico
-        fields = '__all__'
 
-class TecnicoSerializer(serializers.ModelSerializer):
-    class Meta:
+class TecnicoSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Tecnico
-        fields = '__all__'
 
-class ReporteSerializer(serializers.ModelSerializer):
-    class Meta:
+class ReporteSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Reporte
-        fields = '__all__'
 
-class MantenimientoSerializer(serializers.ModelSerializer):
-    class Meta:
+class MantenimientoSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Mantenimiento
-        fields = '__all__'
 
-class SubscripcionSerializer(serializers.ModelSerializer):
-    class Meta:
+class SubscripcionSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Subscripcion
-        fields = '__all__'
 
-class ReciboCfeSerializer(serializers.ModelSerializer):
-    class Meta:
+class ReciboCfeSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = ReciboCfe
-        fields = '__all__'
 
-class TicketSerializer(serializers.ModelSerializer):
-    class Meta:
+class TicketSerializer(BaseSerializer):
+    class Meta(BaseSerializer.Meta):
         model = Ticket
-        fields = '__all__'

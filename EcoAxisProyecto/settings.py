@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config, Csv
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +22,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-sz8%s-b33_!@fet%@2n51i2313_whr7ag0hgqkzduld6(_+0@r'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost', cast=Csv())
 
 
 # Application definition
@@ -77,10 +79,15 @@ WSGI_APPLICATION = 'EcoAxisProyecto.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DATABASE_NAME'),       # Nombre de la base de datos
+        'USER': config('DATABASE_USER'),              # Usuario de la base
+        'PASSWORD': config('DATABASE_PASSWORD'),       # Contraseña
+        'HOST': config('DATABASE_HOST'),               # o IP si es remota
+        'PORT': config('DATABASE_PORT', cast = int),                    # Puerto por defecto
     }
 }
+
 
 
 # Password validation
