@@ -12,6 +12,9 @@ class Usuario(models.Model):
     def __str__(self):
         return f"{self.nombres} {self.apellidos}"
 
+    class Meta:
+        db_table = 'usuario'
+
 
 class Empresa(models.Model):
     empresa_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -40,6 +43,9 @@ class Empresa(models.Model):
     def __str__(self):
         return self.nombre_empresa
 
+    class Meta:
+        db_table = 'empresa'
+
 
 class Catalogo(models.Model):
     producto_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -50,6 +56,9 @@ class Catalogo(models.Model):
 
     def __str__(self):
         return self.nombre_producto
+
+    class Meta:
+        db_table = 'catalogo'
 
 
 class Sucursal(models.Model):
@@ -65,6 +74,9 @@ class Sucursal(models.Model):
     def __str__(self):
         return self.nombre_sucursal
 
+    class Meta:
+        db_table = 'sucursal'
+
 
 class ProductosEmpresas(models.Model):
     prod_empresa_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -78,10 +90,16 @@ class ProductosEmpresas(models.Model):
     def __str__(self):
         return self.alias_producto
 
+    class Meta:
+        db_table = 'productos_empresas'
+
 
 class SucursalProductosEmpresas(models.Model):
     sucursal = models.ForeignKey(Sucursal, on_delete=models.CASCADE)
     producto_empresa = models.ForeignKey(ProductosEmpresas, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'sucursal_productos_empresas'
 
 
 class TipoTecnico(models.Model):
@@ -92,6 +110,9 @@ class TipoTecnico(models.Model):
 
     def __str__(self):
         return self.rol_tecnico
+
+    class Meta:
+        db_table = 'tipo_tecnico'
 
 
 class Tecnico(models.Model):
@@ -107,6 +128,9 @@ class Tecnico(models.Model):
     def __str__(self):
         return f"{self.nombre_tecnico} {self.apellido_tecnico}"
 
+    class Meta:
+        db_table = 'tecnico'
+
 
 class Reporte(models.Model):
     reporte_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -119,6 +143,9 @@ class Reporte(models.Model):
 
     def __str__(self):
         return f"{self.empresa.nombre_empresa} - {self.reporte_consumo} kWh ({self.fecha_inicio_reporte} → {self.fecha_final_reporte})"
+
+    class Meta:
+        db_table = 'reporte'
 
 
 class Mantenimiento(models.Model):
@@ -135,6 +162,9 @@ class Mantenimiento(models.Model):
     def __str__(self):
         return f"{self.producto_empresa.alias_producto} - {self.tipo_mantenimiento}"
 
+    class Meta:
+        db_table = 'mantenimiento'
+
 
 class Subscripcion(models.Model):
     subscripcion_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -145,6 +175,9 @@ class Subscripcion(models.Model):
 
     def __str__(self):
         return f"{self.empresa.nombre_empresa} - {self.fecha_pago} → {self.siguiente_pago}"
+
+    class Meta:
+        db_table = 'subscripcion'
 
 
 class ReciboCfe(models.Model):
@@ -161,6 +194,9 @@ class ReciboCfe(models.Model):
     def __str__(self):
         return f"{self.sucursal.nombre_sucursal} ({self.lectura_anterior} → {self.lectura_actual})"
 
+    class Meta:
+        db_table = 'recibo_cfe'
+
 
 class Ticket(models.Model):
     ticket_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
@@ -171,3 +207,6 @@ class Ticket(models.Model):
 
     def __str__(self):
         return f"{self.nombre_ticket} - Estado: {'Abierto' if self.estado_ticket else 'Cerrado'}"
+
+    class Meta:
+        db_table = 'ticket'

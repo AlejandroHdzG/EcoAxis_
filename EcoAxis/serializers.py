@@ -57,3 +57,8 @@ class ReciboCfeSerializer(BaseSerializer):
 class TicketSerializer(BaseSerializer):
     class Meta(BaseSerializer.Meta):
         model = Ticket
+
+class ProductosEmpresasSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductosEmpresas
+        fields = '__all__'
