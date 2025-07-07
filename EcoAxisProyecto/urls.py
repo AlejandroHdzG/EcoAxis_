@@ -19,5 +19,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('EcoAxis.urls')),  
+    path('api/', include('apps.usuarios.urls')),
+    path('api/', include('apps.empresas.urls')),
+    path('api/', include('apps.catalogo.urls')),
+    path('api/', include('apps.subscripciones.urls')),
+    path('api/', include('apps.reportes.urls')),
 ]

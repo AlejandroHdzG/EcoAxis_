@@ -1,6 +1,6 @@
-from django.apps import AppConfig
+# from django.apps import AppConfig
 
 
-class EcoaxisConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'EcoAxis'
+# class EcoaxisConfig(AppConfig):
+#     default_auto_field = 'django.db.models.BigAutoField'
+#     name = 'EcoAxis'
