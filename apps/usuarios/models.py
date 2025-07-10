@@ -45,6 +45,7 @@ class Tecnico(models.Model):
     sucursal = models.ForeignKey('empresas.Sucursal', on_delete=models.CASCADE)
     empresa = models.ForeignKey('empresas.Empresa', on_delete=models.CASCADE)
     tipo_tecnico = models.ForeignKey(TipoTecnico, on_delete=models.CASCADE)
+    creado_por = models.ForeignKey('usuarios.Usuario', on_delete=models.CASCADE, related_name='tecnicos_creados')
 
     def __str__(self):
         return f"{self.nombre_tecnico} {self.apellido_tecnico}"
