@@ -42,9 +42,9 @@ urlpatterns = [
     path('api/', include('apps.catalogo.urls')),
     path('api/', include('apps.subscripciones.urls')),
     path('api/', include('apps.reportes.urls')),
-    path('api-auth/', include('rest_framework.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    # path('api-auth/', include('rest_framework.urls')),
+    # path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    # path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     # Swagger/OpenAPI
     path('docs/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redocs/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
