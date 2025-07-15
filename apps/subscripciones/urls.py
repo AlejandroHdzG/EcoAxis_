@@ -1,7 +1,13 @@
-from rest_framework import routers
-from .views import SubscripcionViewSet
+from django.urls import path
+from rest_framework.routers import DefaultRouter
+from .views import SubscripcionViewSet, EstadoSubscripcionView, RegistrarPagoView
 
-router = routers.DefaultRouter()
+router = DefaultRouter()
 router.register(r'subscripciones', SubscripcionViewSet)
 
-urlpatterns = router.urls
+urlpatterns = [
+    path('subscripciones/estado/', EstadoSubscripcionView.as_view(), name='estado_subscripcion'),
+    path('subscripciones/pago/', RegistrarPagoView.as_view(), name='registrar_pago'),
+]
+
+urlpatterns += router.urls

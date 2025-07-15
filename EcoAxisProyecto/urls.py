@@ -42,6 +42,8 @@ urlpatterns = [
     path('api/', include('apps.catalogo.urls')),
     path('api/', include('apps.subscripciones.urls')),
     path('api/', include('apps.reportes.urls')),
+    path('api/', include('apps.pagos.urls')),
+
     # path('api-auth/', include('rest_framework.urls')),
     # path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     # path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
