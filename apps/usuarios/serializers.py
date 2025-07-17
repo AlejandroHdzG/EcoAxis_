@@ -4,7 +4,7 @@ from .models import Usuario, TipoTecnico, Tecnico
 class UsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
-        fields = ['nombres', 'apellidos', 'email_user', 'password']
+        fields = ['id', 'nombres', 'apellidos', 'email_user', 'is_active', 'is_staff', 'is_superuser', 'password']
         extra_kwargs = {
             'password': {'write_only': True}
         }
@@ -16,6 +16,12 @@ class UsuarioSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class UsuarioPerfilSerializer(serializers.ModelSerializer):
+    """Serializer para devolver datos del usuario sin password"""
+    class Meta:
+        model = Usuario
+        fields = ['id', 'nombres', 'apellidos', 'email_user', 'is_active', 'is_staff', 'is_superuser']
+
 class TipoTecnicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = TipoTecnico
@@ -24,17 +30,18 @@ class TipoTecnicoSerializer(serializers.ModelSerializer):
 class TecnicoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tecnico
-        fields = '__all__'
+        fields = ['id', 'nombres', 'apellidos', 'email_user', 'telefono', 'especialidad', 'sucursal', 'empresa', 'tipo_tecnico', 'is_active']
+        
+    def create(self, validated_data):
+        return Tecnico.objects.create(**validated_data)
 
 class RegistroUsuarioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Usuario
         fields = ['nombres', 'apellidos', 'email_user', 'password']
-        # Optionally, you can make the password write-only
-        # This prevents the password from being returned in responses
-        # extra_kwargs = {
-        #     'password': {'write_only': True}
-        # }
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

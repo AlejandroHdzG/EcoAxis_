@@ -2,11 +2,13 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions
 from .models import Usuario, TipoTecnico, Tecnico
-from .serializers import UsuarioSerializer, TipoTecnicoSerializer, TecnicoSerializer, RegistroUsuarioSerializer
+from .serializers import UsuarioSerializer, TipoTecnicoSerializer, TecnicoSerializer, RegistroUsuarioSerializer, UsuarioPerfilSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class UsuarioViewSet(viewsets.ModelViewSet):
@@ -45,5 +47,23 @@ class UserView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        serializer = UsuarioSerializer(request.user)
+        serializer = UsuarioPerfilSerializer(request.user)
         return Response(serializer.data)
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    """Vista personalizada de login que devuelve tokens + datos del usuario"""
+    
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        
+        if response.status_code == 200:
+            # Obtener el usuario autenticado
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.user
+            
+            # Agregar datos del usuario a la respuesta
+            user_serializer = UsuarioPerfilSerializer(user)
+            response.data.update(user_serializer.data)
+            
+        return response

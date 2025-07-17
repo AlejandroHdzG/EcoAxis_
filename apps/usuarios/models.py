@@ -38,17 +38,19 @@ class TipoTecnico(models.Model):
 
 class Tecnico(models.Model):
     tecnico_uuid = models.UUIDField(default=uuid.uuid4, editable=False, unique=True)
-    nombre_tecnico = models.CharField(max_length=50)
-    apellido_tecnico = models.CharField(max_length=50)
-    correo_tecnico = models.CharField(max_length=150)
-    telefono_tecnico = models.CharField(max_length=10)
+    nombres = models.CharField(max_length=50)
+    apellidos = models.CharField(max_length=50)
+    email_user = models.CharField(max_length=150)
+    telefono = models.CharField(max_length=15, default='')
+    especialidad = models.CharField(max_length=100, blank=True, null=True)
     sucursal = models.ForeignKey('empresas.Sucursal', on_delete=models.CASCADE)
     empresa = models.ForeignKey('empresas.Empresa', on_delete=models.CASCADE)
     tipo_tecnico = models.ForeignKey(TipoTecnico, on_delete=models.CASCADE)
     creado_por = models.ForeignKey('usuarios.Usuario', on_delete=models.CASCADE, related_name='tecnicos_creados')
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.nombre_tecnico} {self.apellido_tecnico}"
+        return f"{self.nombres} {self.apellidos}"
 
     class Meta:
         db_table = 'tecnico'
